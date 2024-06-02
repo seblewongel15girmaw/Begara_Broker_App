@@ -34,10 +34,36 @@ dependencies:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.6
+  cupertino_icons: ^1.0.2
+  bloc:
+  flutter_bloc:
+  http:
+  shared_preferences: 
+  email_validator: '^2.1.16'
+  image_picker:
+  http_parser: ^4.0.2
+  mime:
+  equatable:
+  dartz:
+  connectivity_plus:
+  get_it: ^7.6.7
+#  flutter_mapbox_autocomplete:
+  socket_io_client:
+  another_carousel_pro: ^1.0.2
+  go_router: ^14.0.2
+  url_launcher: ^6.2.6
+  carousel_slider: ^4.2.1
+  curved_labeled_navigation_bar: ^2.0.2
+  google_fonts: ^6.2.1
+  intl: ^0.17.0
+  flutter_rating_bar:
+  mockito: ^5.4.4
+
 
 dev_dependencies:
   flutter_test:
+    sdk: flutter
+  integration_test:
     sdk: flutter
 
   # The "flutter_lints" package below contains a set of recommended lints to
