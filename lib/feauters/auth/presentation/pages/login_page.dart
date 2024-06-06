@@ -89,7 +89,7 @@ class LoginPage extends StatelessWidget {
                 child: BlocConsumer<LoginBloc,LoginState>(
                   listener: (context, state) {
                     if (state is LogSucess){
-                      Navigator.pushNamed(context, "/login");
+                      Navigator.pushNamed(context, "/add-house");
                     }
                   },
                   builder: (context,state) {

@@ -8,7 +8,8 @@ import 'image_state.dart';
 class ImageBloc extends Bloc<SelectEvent,ImageState> {
   ImageBloc():super(Idle()){
     on<ProfileClicked>(selectImageClicked);
-    
+    on<ImageSelect>(displayedImageSelected);
+    on<CleanImage>(cleanDisplay);
   }
 
   FutureOr<void> selectImageClicked(SelectEvent event, Emitter emit) async{
@@ -22,4 +23,13 @@ class ImageBloc extends Bloc<SelectEvent,ImageState> {
   
 
   
+
+  FutureOr<void> displayedImageSelected(ImageSelect event, Emitter emit) {
+
+    emit(ImageSelected(event.image));
+  }
+
+  FutureOr<void> cleanDisplay(CleanImage event, Emitter emit) {
+    emit(Idle());
+  }
 }
