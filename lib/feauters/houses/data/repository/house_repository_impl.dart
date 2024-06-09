@@ -24,9 +24,14 @@ class HouseRepositoryImpl implements Houserepository{
   }
 
   @override
-  Future<Either<Errors, House>> getHouse(int houseId) {
-    // TODO: implement getHouse
-    throw UnimplementedError();
+  Future<Either<Errors, House>> getHouse(int houseId) async{
+    try{
+      network.isConnected;
+      return Right(await houseDataSource.getHouse(houseId));
+    }
+    on ServerExceptions{
+    return Left(ServerErrors());
+    }
   }
 
   @override

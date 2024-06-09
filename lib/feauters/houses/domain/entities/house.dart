@@ -2,13 +2,13 @@ import 'package:broker_app/feauters/auth/domain/entities/location.dart';
 import 'package:equatable/equatable.dart';
 
 class House extends Equatable{
-  final int id;
+  final int houseId;
   final Location location;
   final double price;
   final int numberOfRooms;
   final String description;
   const House({
-    required this.id,
+    required this.houseId,
     required this.location,
     required this.price,
     required this.numberOfRooms,
@@ -16,13 +16,12 @@ class House extends Equatable{
   });
   
   @override
-  // TODO: implement props
   List<Object?> get props =>[
-    location,price,numberOfRooms,description,id
+    location,price,numberOfRooms,description,houseId
   ];
   Map<String, dynamic> toJson() {
     return {
-      "id":id,
+      "houseId":houseId,
       "location":location.toJson(),
       "price": price,
       "numberOfRoom": numberOfRooms,
