@@ -3,12 +3,12 @@ import 'package:broker_app/core/usecase/usecase.dart';
 import 'package:broker_app/feauters/auth/domain/repository/broker_repository.dart';
 import 'package:dartz/dartz.dart';
 
-class LoginBroker extends UseCase<int,Params>{
+class LoginBroker extends UseCase<String,Params>{
   BrokerRepo brokerRepo;
   LoginBroker(this.brokerRepo);
 
   @override
-  Future<Either<Errors, int>> call(param) async{
+  Future<Either<Errors, String>> call(param) async{
     return await brokerRepo.loginBroker(param.email, param.password);
   }
   

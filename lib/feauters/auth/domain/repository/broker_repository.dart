@@ -13,6 +13,6 @@ abstract class BrokerRepo {
       Location address,
       XFile profilePic);
   
-  Future<Either<Errors,int>> loginBroker(String email, String password);
+  Future<Either<Errors,String>> loginBroker(String email, String password);
   Future<Either<Errors,List<Location>>> getLocations(String query);
 }

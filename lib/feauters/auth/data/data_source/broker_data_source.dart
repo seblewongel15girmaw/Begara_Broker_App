@@ -19,7 +19,7 @@ abstract class BrokerDataSource {
       Location address,
       XFile profilePic);
 
-  Future<int> loginBroker(String email, String password);
+  Future<String> loginBroker(String email, String password);
   Future<List<LocationModel>> getLocations(String query);
 }
 
@@ -28,7 +28,7 @@ class BrokerDataSourceImpl implements BrokerDataSource {
   final http.Client client;
   BrokerDataSourceImpl(this.client);
   @override
-  Future<int> loginBroker(String email, String password) async {
+  Future<String> loginBroker(String email, String password) async {
     final response = await client.post(Uri.parse(baseUri + "login"),
         headers: {
           'Content-Type': 'application/json; charset=UTF-8',
@@ -38,7 +38,7 @@ class BrokerDataSourceImpl implements BrokerDataSource {
       final jsonResponse = json.decode(response.body);
       final token = jsonResponse['token'];
       SharedPreferencesService.setString("tokens", token);
-      return response.statusCode;
+      return token;
     } else {
       throw ServerExceptions();
     }

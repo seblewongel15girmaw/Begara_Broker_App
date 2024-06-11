@@ -26,7 +26,7 @@ class AddHousePage extends StatelessWidget {
     final ValueNotifier<int> _notifier = ValueNotifier<int>(0);
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 187, 148, 48),
+        backgroundColor: Color.fromRGBO(212, 175, 55,1),
         title: Text("Add house"),
       ),
       body: SingleChildScrollView(

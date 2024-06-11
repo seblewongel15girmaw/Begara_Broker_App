@@ -13,7 +13,7 @@ class BrokerRepoImpl implements BrokerRepo{
   Network network;
   BrokerRepoImpl(this.brokerDataSource, this.network);
   @override
-  Future<Either<Errors, int>> loginBroker(String email, String password) async{
+  Future<Either<Errors, String>> loginBroker(String email, String password) async{
     try{
       network.isConnected;
       return Right(await brokerDataSource.loginBroker(email, password));
