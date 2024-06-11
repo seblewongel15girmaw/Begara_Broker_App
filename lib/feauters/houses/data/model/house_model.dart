@@ -21,7 +21,7 @@ class HouseModel extends House {
         houseId: map["houseId"],
         location:LocationModel.fromJson(jsonDecode(map["location"])),
         price: map["price"].toDouble(),
-        numberOfRooms: map["numberOfRooms"],
+        numberOfRooms: map["numberOfRoom"],
         description: map["description"]);
   }
 }

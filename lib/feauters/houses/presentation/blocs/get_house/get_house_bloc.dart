@@ -17,29 +17,12 @@ class GetHouseBloc extends Bloc<GetHouseEvent, GetHouseState> {
   FutureOr<void> initialEvent(InitialEvent event, Emitter emit) async{
     emit(Loading());
    var response= await getAllHouses(0);
-print(response);
-    // response.fold((ifLeft){
-    //   response.fold(
-    //         (ifLeft) {
-    //       // Handle the failure case
-    //       emit(HouseLoadFailed());
-    //     },
-    //         (ifRight) {
-    //           List<HouseModel> houseList = ifRight.map((house) {
-    //             if (house != null) {
-    //               return HouseModel.fromJson(house);
-    //             } else {
-    //               // Provide a default HouseModel if house is null
-    //               return HouseModel(id: 0, name: 'Unknown', address: 'Unknown');
-    //             }
-    //           }).toList();
-    //           emit(HouseLoadSuccess(houseList));
-    //
-    //         },
-    //   );
-      // emit(HouseLoadSuccess(response);
-    // }, (ifRight){
-      emit(HouseLoadFailed());
-    // });
+   response.fold((error){
+    emit(HouseLoadFailed());
+   }, (houses){
+    emit(HouseLoadSuccess(houses));
+   });
+   
+    
   }
 }
