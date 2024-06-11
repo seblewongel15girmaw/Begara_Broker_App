@@ -74,6 +74,7 @@ class HomePage extends StatelessWidget{
           }
           else if(state is HouseLoadSuccess){
             print(state.houses);
+            var houses=state.houses;
             return Padding(
               padding: const EdgeInsets.all(10.0),
               child: GridView.builder(
@@ -83,15 +84,15 @@ class HomePage extends StatelessWidget{
                     mainAxisSpacing: 14.0,
                     mainAxisExtent: 150
                   ),
-                itemCount: 6,
+                itemCount: houses.length,
                   itemBuilder: (context, index){
-                    return HouseCard();
+                    return HouseCard(house:houses[index]);
                   }
               ),
             );
           }
           else{
-            return Text("error");
+            return Center(child: Text("error"));
           }
           }
     ),

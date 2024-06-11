@@ -39,6 +39,7 @@ class HouseDataSourceImpl implements HouseDataSource{
 
    }
    catch(e){
+     print("this is the error");
      print(e);
      throw ServerExceptions();
    }
@@ -48,7 +49,7 @@ class HouseDataSourceImpl implements HouseDataSource{
   Future<House> getHouse(int houseId) async{
     try{
       http.Response res= await http.get(Uri.parse(baseUri+"gethousedetail/:${1}"));
-      Map<String, dynamic> house= jsonDecode(res.body);
+      var house= jsonDecode(res.body);
 
       HouseModel houseDetail=HouseModel.fromJson(house);
       return houseDetail;

@@ -1,8 +1,12 @@
 import 'package:another_carousel_pro/another_carousel_pro.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:broker_app/feauters/houses/domain/entities/house.dart';
 import 'package:flutter/material.dart';
+import 'dart:io';
+
 
 class HouseCard extends StatelessWidget{
+House house;
+HouseCard({required this.house});
 
   @override
   Widget build(BuildContext context) {
@@ -44,18 +48,16 @@ class HouseCard extends StatelessWidget{
                       dotVerticalPadding: 10.0,
                       showIndicator: true,
                       indicatorBgPadding: 7.0,
-                      images:
-                        [ Image(image:NetworkImage("https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg"),
-                        fit: BoxFit.cover,),
-                          Image(image:NetworkImage("https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg"),
-                            fit: BoxFit.cover,),
-                          Image(image:NetworkImage("https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg"),
-                            fit: BoxFit.cover,),
-                        ]
-                        ),
+                   images: house.Images.map((house) {
+                        return FittedBox(
+                        fit: BoxFit.fill,
+                        child: Image(
+                        image:FileImage(File(house.imageUrl)),
+                        )
+                        );
+                        }).toList()
             ),
-          ),
-
+          )),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 40),
             child: Row(
@@ -72,6 +74,4 @@ class HouseCard extends StatelessWidget{
       ),
     );
   }
-
-
 }
