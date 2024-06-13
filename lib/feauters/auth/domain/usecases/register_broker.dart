@@ -5,15 +5,23 @@ import 'package:broker_app/feauters/auth/domain/repository/broker_repository.dar
 import 'package:dartz/dartz.dart';
 import 'package:image_picker/image_picker.dart';
 
-class RegisterBroker extends UseCase<int,Params>{
+class RegisterBroker extends UseCase<int, Params> {
   BrokerRepo brokerRepo;
   RegisterBroker(this.brokerRepo);
 
   @override
-  Future<Either<Errors, int>> call(Params param) async{
-    return await brokerRepo.registerBroker(param.fullName, param.password, param.email, param.phoneNumber, param.phoneNumber2, param.address, param.profilePic);
+  Future<Either<Errors, int>> call(Params param) async {
+    return await brokerRepo.registerBroker(
+        param.fullName,
+        param.password,
+        param.email,
+        param.phoneNumber,
+        param.phoneNumber2,
+        param.address,
+        param.profilePic,
+        param.idPic,
+        param.gender);
   }
-
 }
 
 class Params {
@@ -24,5 +32,16 @@ class Params {
   String phoneNumber2;
   Location address;
   XFile profilePic;
-  Params({required this.fullName, required this.password, required this.email, required this.phoneNumber, required this.address, required this.phoneNumber2,required this.profilePic});
+  XFile idPic;
+  String gender;
+  Params(
+      {required this.fullName,
+      required this.password,
+      required this.email,
+      required this.phoneNumber,
+      required this.address,
+      required this.phoneNumber2,
+      required this.profilePic,
+      required this.idPic,
+      required this.gender});
 }

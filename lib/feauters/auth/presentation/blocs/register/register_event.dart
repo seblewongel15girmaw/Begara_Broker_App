@@ -10,6 +10,8 @@ class RegisterEvent {
   String phoneNumber2;
   Location address;
   XFile? profilePic;
+  XFile? idPic;
+  String gender;
   RegisterEvent(
       {required this.fullName,
       required this.address,
@@ -17,5 +19,7 @@ class RegisterEvent {
       required this.password,
       required this.phoneNumber,
       required this.phoneNumber2,
-      required this.profilePic});
+      required this.profilePic,
+      required this.idPic,
+      required this.gender});
 }

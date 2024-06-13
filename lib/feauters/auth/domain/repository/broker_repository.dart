@@ -11,7 +11,9 @@ abstract class BrokerRepo {
       String phoneNumber,
       String phoneNumber2,
       Location address,
-      XFile profilePic);
+      XFile profilePic,
+      XFile idPic,
+      String gender);
   
   Future<Either<Errors,String>> loginBroker(String email, String password);
   Future<Either<Errors,List<Location>>> getLocations(String query);
