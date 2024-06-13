@@ -4,9 +4,11 @@ import 'package:broker_app/feauters/auth/presentation/blocs/login/login_bloc.dar
 import 'package:broker_app/feauters/auth/presentation/blocs/password_visiblity/password_bloc.dart';
 import 'package:broker_app/feauters/auth/presentation/blocs/register/register_bloc.dart';
 import 'package:broker_app/feauters/auth/presentation/pages/register_page.dart';
+import 'package:broker_app/feauters/houses/domain/entities/house.dart';
 import 'package:broker_app/feauters/houses/presentation/blocs/create_house/create_house_bloc.dart';
 import 'package:broker_app/feauters/houses/presentation/blocs/get_house/get_house_bloc.dart';
 import 'package:broker_app/feauters/houses/presentation/pages/home_page.dart';
+import 'package:broker_app/feauters/houses/presentation/pages/house_detail_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -50,6 +52,18 @@ class Routes{
               BlocProvider<GetHouseBloc>(create: (contex)=>sl<GetHouseBloc>())
             ],
             child: HomePage()));
+
+        case "/houseDetail":
+          var args= settings.arguments as House;
+        return MaterialPageRoute(builder: (_)=>MultiBlocProvider(
+            providers: [
+              BlocProvider<LocationBloc>(create: (context)=>sl<LocationBloc>()),
+              BlocProvider<ImageBloc>(create: (context)=>ImageBloc()),
+              BlocProvider<GetHouseBloc>(create: (contex)=>sl<GetHouseBloc>())
+            ],
+            child: HouseDetail(houseModel: args)));
+
+
       case '/add-house':
       return MaterialPageRoute(
         builder: (_)=>MultiBlocProvider(providers: [

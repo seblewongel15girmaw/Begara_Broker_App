@@ -19,13 +19,13 @@ HouseCard({required this.house});
             BoxShadow(
               color: Colors.grey.shade500,
               spreadRadius: 1,
-              blurRadius: 12,
+              blurRadius: 6,
               offset: Offset(3, 3),
             ),
             BoxShadow(
               color: Colors.white,
               spreadRadius: 1,
-              blurRadius: 12,
+              blurRadius: 6,
               offset: Offset(-3, -3),
             )]
       ),
