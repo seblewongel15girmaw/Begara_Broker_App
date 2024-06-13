@@ -11,6 +11,8 @@ class Broker extends Equatable {
   final String phoneNumber2;
   final Location address;
   final String profilePic;
+  final String brokerIdPic;
+  final String gender;
   
   const Broker(
       { required this.id,
@@ -21,13 +23,20 @@ class Broker extends Equatable {
       required this.phoneNumber2,
       required this.address,
       required this.profilePic,
+        required this.gender,
+        required this.brokerIdPic,
       });
 
   @override
-  // TODO: implement props
   List<Object?> get props {
     return [
       id,
+      fullName,
+      gender,
+      email,
+      password,
+      brokerIdPic,
+      profilePic,
       phoneNumber,
       phoneNumber2,
       address,
@@ -43,6 +52,9 @@ class Broker extends Equatable {
       "password": password,
       "phone_number": phoneNumber,
       "phone_number2": phoneNumber2,
+      "gender":gender,
+      "profilePic":profilePic,
+      "brokerIdPic":brokerIdPic,
       "address": address.toJson(),
     };
   }

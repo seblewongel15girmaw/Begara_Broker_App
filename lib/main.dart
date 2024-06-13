@@ -1,3 +1,4 @@
+import 'package:broker_app/feauters/auth/presentation/pages/verification_screen.dart';
 import 'package:broker_app/injectionContainer.dart';
 import 'package:flutter/material.dart';
 
@@ -29,7 +30,8 @@ class MyApp extends StatelessWidget {
                 return MaterialApp(
                   debugShowCheckedModeBanner: false,
                   title: 'Flutter Demo',
-                  initialRoute: snapshot.data == true ? "/login" : "/homePage",
+                  home: VerificationScreen(),
+                  // initialRoute: snapshot.data == true ? "/homePage" :"/login" ,
                   onGenerateRoute: appRoutes.generateRoute,
                 );
               

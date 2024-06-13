@@ -29,6 +29,7 @@ class HouseDataSourceImpl implements HouseDataSource{
 
   http.Response response = await http.get(Uri.parse(baseUri+"all_broker_house/${1}"));
     List houses= jsonDecode(response.body);
+    print(response.body);
     houseList= houses.map((house) {
      return HouseModel.fromJson(house);
     }).toList();
