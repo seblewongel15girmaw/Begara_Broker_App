@@ -10,11 +10,13 @@ import 'package:broker_app/feauters/auth/presentation/blocs/register/register_st
 import 'package:broker_app/feauters/auth/presentation/pages/login_page.dart';
 import 'package:broker_app/feauters/auth/presentation/widgets/custom_password_field.dart';
 import 'package:broker_app/feauters/auth/presentation/widgets/custom_text_field.dart';
+import 'package:broker_app/feauters/auth/presentation/widgets/drop_down_option.dart';
 import 'package:broker_app/feauters/auth/presentation/widgets/location_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import '../blocs/image/image.dart';
+import '../widgets/upload_button.dart';
 
 class RegisterPage extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
@@ -27,6 +29,9 @@ class RegisterPage extends StatelessWidget {
   final TextEditingController repassword = TextEditingController();
   Location? address;
   XFile? image;
+  XFile? image2;
+
+  String? gender;
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -34,15 +39,20 @@ class RegisterPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: Center(child: Text("Register",style: TextStyle(color:Colors.white ),)),
+        title: Center(
+            child: Text(
+          "Register",
+          style: TextStyle(color: Colors.white),
+        )),
         backgroundColor: Color.fromARGB(255, 187, 148, 48),
       ),
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            
-            SizedBox(height: 20,),
+            SizedBox(
+              height: 20,
+            ),
             Center(
               child: BlocConsumer<ImageBloc, ImageState>(
                   listener: (context, state) {
@@ -84,12 +94,16 @@ class RegisterPage extends StatelessWidget {
                 );
               }),
             ),
-            BlocBuilder<RegisterBloc,RegisterState>(builder: (context,state){
-              if(state is ProfileNotSelected){
-                return Text("Profile must be selected!",style: TextStyle(color: Colors.red),);
-              }
-              else{
-                return SizedBox(height: 0,);
+            BlocBuilder<RegisterBloc, RegisterState>(builder: (context, state) {
+              if (state is ProfileNotSelected) {
+                return Text(
+                  "Profile must be selected!",
+                  style: TextStyle(color: Colors.red),
+                );
+              } else {
+                return SizedBox(
+                  height: 0,
+                );
               }
             }),
             SizedBox(
@@ -129,14 +143,25 @@ class RegisterPage extends StatelessWidget {
                         textController: email,
                         label: "Email",
                         validator: emailValidator),
+                    CustomDropdownButton(
+                      initalSelection: null,
+                      leadIcon: Icons.note_alt_sharp,
+                      hintText: "Choose gender",
+                      header: "Gender",
+                      items: ["Male","Female",],
+                      value: gender,
+                      onChanged: (newValue) {
+                        gender = newValue!;
+                      },
+                    ),
                     CustomTextField(
                         textController: phoneNumber,
                         label: "Phone Number 1",
-                        validator: nameValidator),
+                        validator: phoneNumberValidator),
                     CustomTextField(
                         textController: phoneNumber2,
                         label: "Phone Number 2",
-                        validator: nameValidator),
+                        validator: phoneNumberValidator),
                     LocationBar(
                         getLocation: (location) {
                           address = location;
@@ -153,6 +178,17 @@ class RegisterPage extends StatelessWidget {
                         validator: (value) {
                           repasswordValidator(value, password.text);
                         }),
+                    UploadImageButton(
+                        idImage: image2,
+                        onPressed: () {
+                          BlocProvider.of<ImageBloc>(context).add(IdClicked());
+                        },
+                        listener: (context, state) {
+                          if (state is IdSelected) {
+                            image2 = state.image;
+                          }
+                        },
+                      ),
                     SizedBox(
                       height: 10,
                     ),
@@ -167,7 +203,9 @@ class RegisterPage extends StatelessWidget {
                                   password: password.text,
                                   phoneNumber: phoneNumber.text,
                                   phoneNumber2: phoneNumber2.text,
-                                  profilePic: image));
+                                  profilePic: image,
+                                  idPic: image2,
+                                  gender: gender!));
                         }
                       },
                       child: BlocConsumer<RegisterBloc, RegisterState>(
@@ -183,8 +221,7 @@ class RegisterPage extends StatelessWidget {
                                 ? Colors.red
                                 : State is Registering
                                     ? Colors.grey
-                                    :  Color.fromARGB(255, 187, 148, 48),
-                          
+                                    : Color.fromARGB(255, 187, 148, 48),
                             height: 40,
                             child: Center(
                               child: state is RegisterFailed

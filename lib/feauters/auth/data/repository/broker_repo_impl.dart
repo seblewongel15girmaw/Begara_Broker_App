@@ -25,10 +25,10 @@ class BrokerRepoImpl implements BrokerRepo{
   }
 
   @override
-  Future<Either<Errors, int>> registerBroker(String fullName, String password, String email, String phoneNumber, String phoneNumber2, Location address, XFile profilePic) async{
+  Future<Either<Errors, int>> registerBroker(String fullName, String password, String email, String phoneNumber, String phoneNumber2, Location address, XFile profilePic,XFile idPic,String gender) async{
     try{
       network.isConnected;
-      return Right(await brokerDataSource.registerBroker(fullName, password, email, phoneNumber, phoneNumber2, address, profilePic));
+      return Right(await brokerDataSource.registerBroker(fullName, password, email, phoneNumber, phoneNumber2, address, profilePic,idPic,gender));
     }
     on ServerExceptions{
       return Left(ServerErrors());
