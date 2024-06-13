@@ -1,11 +1,11 @@
 import 'package:broker_app/feauters/auth/presentation/pages/verification_screen.dart';
 import 'package:broker_app/injectionContainer.dart';
 import 'package:flutter/material.dart';
-
-
+import 'package:jwt_decode/jwt_decode.dart';
 import 'config/routes/route.dart';
 import 'core/util/sharedPreference.dart';
 void main() async {
+  
   await init();
   runApp(const MyApp());
 }
@@ -30,8 +30,7 @@ class MyApp extends StatelessWidget {
                 return MaterialApp(
                   debugShowCheckedModeBanner: false,
                   title: 'Flutter Demo',
-                  home: VerificationScreen(),
-                  // initialRoute: snapshot.data == true ? "/homePage" :"/login" ,
+                  initialRoute: snapshot.data == true ? "/homePage" : "/login",
                   onGenerateRoute: appRoutes.generateRoute,
                 );
               
@@ -43,11 +42,13 @@ class MyApp extends StatelessWidget {
 }
 
 Future<bool> _getInitialRoute() async {
-  final stored = await SharedPreferencesService.getString("token");
+  final stored = await SharedPreferencesService.getString("tokenS");
   if (stored == null) {
     return false;
   }
-  else {
+  if (Jwt.isExpired(stored)) {
+    return false;
+  } else {
     return true;
   }
 }

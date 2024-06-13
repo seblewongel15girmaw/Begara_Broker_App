@@ -51,8 +51,8 @@ String? adressValidator(String? value) {
 String? phoneNumberValidator(String? value){
   if (value == null || value.isEmpty) {
     return "This field cannot be empty";
-  } else if (value.length != 10) {
-    return "Phonenumbers are 10 digits";
+  } else if (value.length < 10 || value.length>13) {
+    return "Phonenumbers are between 10 to 13 digits";
   }
   else if(!isNumeric(value)){
     return "please enter correct phone number format";

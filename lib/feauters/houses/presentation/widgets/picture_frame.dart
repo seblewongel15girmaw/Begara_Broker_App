@@ -43,7 +43,7 @@ class PictureFrame extends StatelessWidget {
                           ? DecorationImage(
                               image: FileImage(File(state.image!.path)),
                               fit: BoxFit.fill)
-                          : null,
+                          : DecorationImage(image: AssetImage("asset/image_place_holder.png"),fit: BoxFit.fill),
                       border: Border.all(
                         width: 2,
                         color: Color.fromARGB(255, 187, 148, 48),
@@ -144,8 +144,9 @@ class PictureFrame extends StatelessWidget {
                                 decoration: BoxDecoration(
                                     border: Border.all(
                                   width: 1,
-                                  color: Color.fromARGB(255, 187, 148, 48),
-                                )),
+                                  color: Color.fromARGB(255, 187, 148, 48), 
+                                ),
+                                image: DecorationImage(image: AssetImage("asset/image_place_holder.png"),fit: BoxFit.fill),),
                               );
                             }
                           }),

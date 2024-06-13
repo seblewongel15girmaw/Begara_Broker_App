@@ -17,7 +17,10 @@ abstract class BrokerDataSource {
       String phoneNumber,
       String phoneNumber2,
       Location address,
-      XFile profilePic);
+      XFile profilePic,
+      XFile idPic,
+      String gender,
+      );
 
   Future<String> loginBroker(String email, String password);
   Future<List<LocationModel>> getLocations(String query);
@@ -52,7 +55,9 @@ class BrokerDataSourceImpl implements BrokerDataSource {
       String phoneNumber,
       String phoneNumber2,
       Location address,
-      XFile profilePic) async {
+      XFile profilePic,
+      XFile idPic,
+      String gender) async {
     final token = await SharedPreferencesService.getString("tokens");
     final request = await uploadSingleImage(
         fullName,
@@ -62,10 +67,14 @@ class BrokerDataSourceImpl implements BrokerDataSource {
         phoneNumber2,
         address,
         profilePic,
+        idPic,
+        gender,
         token,
         baseUri + "signup");
     final response = await request.send();
-    if (response.statusCode == 201) {
+    if (response.statusCode == 200) {
+      var responseResult = await http.Response.fromStream(response);
+      print(responseResult.body);
       return response.statusCode;
     } else {
       throw ServerExceptions();

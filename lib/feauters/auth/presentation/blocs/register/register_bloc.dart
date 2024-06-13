@@ -24,7 +24,9 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
         phoneNumber: event.phoneNumber,
         address: event.address,
         phoneNumber2: event.phoneNumber2,
-        profilePic: event.profilePic!);
+        profilePic: event.profilePic!,
+        idPic: event.idPic!,
+        gender: event.gender);
     final response= await registerBroker(param);
     response.fold((ifLeft){
       emit(RegisterFailed());

@@ -15,24 +15,34 @@ Future<http.MultipartRequest> uploadSingleImage(
   String phoneNumber2,
   Location address,
   XFile profilePic,
+  XFile idPic,
+  String gender,
   token,
   apiUrl,
 ) async {
   final url = Uri.parse(apiUrl);
   final mimeType = lookupMimeType(profilePic.path)!.split('/');
+  final mimeType2 = lookupMimeType(idPic.path)!.split('/');
   final imageUploadRequest = http.MultipartRequest('POST', url);
   final file = await http.MultipartFile.fromPath(
-    "image",
+    "profile_pic",
     profilePic.path,
     contentType: MediaType(mimeType[0], mimeType[1]),
   );
+  final file2 = await http.MultipartFile.fromPath(
+    "broker_personal_id",
+    idPic.path,
+    contentType: MediaType(mimeType2[0], mimeType2[1]),
+  );
   imageUploadRequest.files.add(file);
+  imageUploadRequest.files.add(file2);
   try {
     imageUploadRequest.fields['full_name'] = fullName;
     imageUploadRequest.fields['phone_number1'] = phoneNumber;
     imageUploadRequest.fields['phone_number2'] = phoneNumber2;
     imageUploadRequest.fields['password'] = password;
     imageUploadRequest.fields['email'] = email;
+    imageUploadRequest.fields['gender'] = gender;
     imageUploadRequest.fields['address'] = jsonEncode(address.toJson());
     imageUploadRequest.headers['Authorization'] = 'Bearer $token';
   } catch (error) {

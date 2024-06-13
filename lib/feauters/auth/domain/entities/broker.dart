@@ -12,6 +12,7 @@ class Broker extends Equatable {
   final Location address;
   final String profilePic;
   final String brokerIdPic;
+  final String idPic;
   final String gender;
   
   const Broker(
@@ -23,8 +24,8 @@ class Broker extends Equatable {
       required this.phoneNumber2,
       required this.address,
       required this.profilePic,
-        required this.gender,
-        required this.brokerIdPic,
+      required this.idPic,
+      required this.gender,
       });
 
   @override
@@ -56,6 +57,9 @@ class Broker extends Equatable {
       "profilePic":profilePic,
       "brokerIdPic":brokerIdPic,
       "address": address.toJson(),
+      "id_pic":idPic,
+      "gender":gender,
+      "profile_pic":profilePic
     };
   }
 }
