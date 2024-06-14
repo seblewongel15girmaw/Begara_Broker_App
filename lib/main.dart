@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
 }
 
 Future<bool> _getInitialRoute() async {
-  final stored = await SharedPreferencesService.getString("tokenS");
+  final stored = await SharedPreferencesService.getString("tokens");
   if (stored == null) {
     return false;
   }

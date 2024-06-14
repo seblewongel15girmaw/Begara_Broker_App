@@ -54,10 +54,11 @@ class LoginPage extends StatelessWidget {
           ),
          SizedBox(height: 20,),
           Form(
+            key:_formKey,
               child: Column(
             children: [
               CustomTextField(textController: email, label:"Email", validator: emailValidator),
-              CustomPasswordField(textController: email, label:"Password", validator: passwordValidator),
+              CustomPasswordField(textController: password, label:"Password", validator: passwordValidator),
               SizedBox(
                 height: 30,
               ),
@@ -89,7 +90,8 @@ class LoginPage extends StatelessWidget {
                 child: BlocConsumer<LoginBloc,LoginState>(
                   listener: (context, state) {
                     if (state is LogSucess){
-                      Navigator.pushNamed(context, "/add-house");
+                      print("there is the success blud");
+                      Navigator.pushNamed(context, "/homePage");
                     }
                   },
                   builder: (context,state) {
