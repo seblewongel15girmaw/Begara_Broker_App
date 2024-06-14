@@ -46,4 +46,15 @@ class BrokerRepoImpl implements BrokerRepo{
     }
   }
 
+  @override
+  Future<Either<Errors, String>> verifyBroker(String otp) async{
+    try{
+      network.isConnected();
+      return Right(await brokerDataSource.verifyBroker(otp));
+    }
+  on ServerExceptions{
+      return Left(ServerErrors());
+    }
+  }
+
 }

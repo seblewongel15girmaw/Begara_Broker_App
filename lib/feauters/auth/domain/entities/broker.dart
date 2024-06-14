@@ -11,7 +11,6 @@ class Broker extends Equatable {
   final String phoneNumber2;
   final Location address;
   final String profilePic;
-  final String brokerIdPic;
   final String idPic;
   final String gender;
   
@@ -36,7 +35,6 @@ class Broker extends Equatable {
       gender,
       email,
       password,
-      brokerIdPic,
       profilePic,
       phoneNumber,
       phoneNumber2,
@@ -55,7 +53,6 @@ class Broker extends Equatable {
       "phone_number2": phoneNumber2,
       "gender":gender,
       "profilePic":profilePic,
-      "brokerIdPic":brokerIdPic,
       "address": address.toJson(),
       "id_pic":idPic,
       "gender":gender,

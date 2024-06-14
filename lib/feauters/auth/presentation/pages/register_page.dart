@@ -211,7 +211,7 @@ class RegisterPage extends StatelessWidget {
                       child: BlocConsumer<RegisterBloc, RegisterState>(
                           listener: (context, state) {
                         if (state is RegisterSuccess) {
-                          Navigator.pushNamed(context, "/login");
+                          Navigator.pushNamed(context, "/verification");
                         }
                       }, builder: (context, state) {
                         return Padding(

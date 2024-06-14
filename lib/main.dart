@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
                 return MaterialApp(
                   debugShowCheckedModeBanner: false,
                   title: 'Flutter Demo',
-                  initialRoute: snapshot.data == true ? "/homePage" : "/login",
+                  initialRoute: "/register" ,
                   onGenerateRoute: appRoutes.generateRoute,
                 );
               

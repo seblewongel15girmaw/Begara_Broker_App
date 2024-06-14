@@ -6,6 +6,7 @@ import 'package:broker_app/feauters/auth/data/repository/broker_repo_impl.dart';
 import 'package:broker_app/feauters/auth/domain/repository/broker_repository.dart';
 import 'package:broker_app/feauters/auth/domain/usecases/login_broker.dart';
 import 'package:broker_app/feauters/auth/domain/usecases/register_broker.dart';
+import 'package:broker_app/feauters/auth/domain/usecases/verifyBroker.dart';
 import 'package:broker_app/feauters/auth/presentation/blocs/login/login_bloc.dart';
 import 'package:broker_app/feauters/auth/presentation/blocs/register/register_bloc.dart';
 import 'package:broker_app/feauters/houses/data/data_source/house_data_source.dart';
@@ -27,7 +28,7 @@ import 'feauters/auth/presentation/blocs/location/locations.dart';
 final sl=GetIt.instance;
 Future <void> init() async{
   final sharedPreferences= await SharedPreferences.getInstance();
-  sl.registerFactory(() => RegisterBloc(sl()));
+  sl.registerFactory(() => RegisterBloc(sl(), sl()));
   sl.registerFactory(() => LoginBloc(sl()));
   sl.registerFactory(() => LocationBloc(sl()));
   sl.registerFactory(() => CreateHouseBloc(sl()));
@@ -35,6 +36,7 @@ Future <void> init() async{
   sl.registerLazySingleton(() => RegisterBroker(sl()));
   sl.registerLazySingleton(() => LoginBroker(sl()));
   sl.registerLazySingleton(() => GetLocations(sl()));
+  sl.registerLazySingleton(()=> VerifyBroker(sl()));
   sl.registerLazySingleton(() => PostHouse(sl()));
   sl.registerLazySingleton(()=> GetAllHouses(sl()));
   sl.registerLazySingleton<BrokerRepo>(() => BrokerRepoImpl(sl(), sl(),) );

@@ -2,7 +2,9 @@ import 'package:image_picker/image_picker.dart';
 
 import '../../../domain/entities/location.dart';
 
-class RegisterEvent {
+abstract class BrokerEvent{}
+
+class RegisterEvent extends BrokerEvent {
   String fullName;
   String password;
   String email;
@@ -22,4 +24,9 @@ class RegisterEvent {
       required this.profilePic,
       required this.idPic,
       required this.gender});
+}
+
+class SentOTPEvent extends BrokerEvent{
+  String otp;
+  SentOTPEvent(this.otp);
 }
