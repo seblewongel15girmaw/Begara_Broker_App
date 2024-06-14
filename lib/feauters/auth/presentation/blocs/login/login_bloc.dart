@@ -18,7 +18,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     response.fold((ifLeft) {
       emit(LogFailed());
     }, (ifRight) {
-      LogSucess();
+      emit(LogSucess());
     });
   }
 }

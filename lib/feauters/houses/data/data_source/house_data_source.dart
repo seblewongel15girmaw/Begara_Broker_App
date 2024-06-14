@@ -23,24 +23,25 @@ class HouseDataSourceImpl implements HouseDataSource{
 
   @override
   Future<List<HouseModel>> getAllHouses(int brokerId) async{
-   try{
      List<HouseModel> houseList;
-     final token = await SharedPreferencesService.getString("tokens");
+     final token = await SharedPreferencesService.getString("tokens");   
+  http.Response response = await http.get(Uri.parse(baseUri+"all_broker_house/${1}"),
+  headers: {
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer $token'
+      },);
 
-  http.Response response = await http.get(Uri.parse(baseUri+"all_broker_house/${1}"));
+    if(response.statusCode==200){
     List houses= jsonDecode(response.body);
     houseList= houses.map((house) {
      return HouseModel.fromJson(house);
     }).toList();
     print("house list");
-     print(houseList);
-
-    return houseList;
-
-   }
-   catch(e){
-     print("this is the error");
-     print(e);
+    print(houseList);
+    return houseList;}
+   else{
+    
+     print("this is the error ${response.body}");
      throw ServerExceptions();
    }
   }
