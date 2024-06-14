@@ -5,10 +5,14 @@ import 'package:broker_app/feauters/auth/domain/usecases/register_broker.dart';
 import 'package:broker_app/feauters/auth/presentation/blocs/register/register_event.dart';
 import 'package:broker_app/feauters/auth/presentation/blocs/register/register_state.dart';
 
-class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
+import '../../../domain/usecases/verifyBroker.dart';
+
+class RegisterBloc extends Bloc<BrokerEvent, RegisterState> {
   RegisterBroker registerBroker;
-  RegisterBloc(this.registerBroker) : super(IdleRegister()) {
+  VerifyBroker verifyBroker;
+  RegisterBloc(this.registerBroker, this.verifyBroker) : super(IdleRegister()) {
     on<RegisterEvent>(registerButtonClicked);
+    on<SentOTPEvent>(sentOTP);
   }
 
   FutureOr<void> registerButtonClicked(RegisterEvent event, Emitter emit) async{
@@ -34,5 +38,18 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
       emit(RegisterSuccess());
     });
   }
+}
+
+FutureOr<void> sentOTP(SentOTPEvent event, Emitter emit) async{
+  emit(RegisterSuccess());
+  final res= await verifyBroker(event.otp);
+  print("this is in the sentotp event");
+  print(res);
+  res.fold((ifLeft){
+    emit(VerificationFailed());
+  },
+  (ifRight){
+    emit(VerificationSuccess());
+  });
 }
 }

@@ -24,6 +24,7 @@ abstract class BrokerDataSource {
 
   Future<String> loginBroker(String email, String password);
   Future<List<LocationModel>> getLocations(String query);
+  Future<String> verifyBroker(String otp);
 }
 
 class BrokerDataSourceImpl implements BrokerDataSource {
@@ -72,9 +73,13 @@ class BrokerDataSourceImpl implements BrokerDataSource {
         token,
         baseUri + "signup");
     final response = await request.send();
+    print("this is signup");
     if (response.statusCode == 200) {
       var responseResult = await http.Response.fromStream(response);
-      print(responseResult.body);
+      final jsonResponse = json.decode(responseResult.body);
+      print(jsonResponse);
+      final session = jsonResponse['sessionId'];
+      await SharedPreferencesService.setString("session",session );
       return response.statusCode;
     } else {
       throw ServerExceptions();
@@ -94,5 +99,31 @@ class BrokerDataSourceImpl implements BrokerDataSource {
     } else {
       throw ServerExceptions();
     }
+  }
+
+  @override
+  Future<String> verifyBroker(String otp) async{
+    var sessionId= await SharedPreferencesService.getString("session");
+   try{
+     var res= await client.post(
+         Uri.parse(baseUri+"verify"),
+         headers: {
+           'Content-Type': 'application/json; charset=UTF-8',
+         },
+         body: jsonEncode({
+           "sessionId": sessionId,
+           "verificationCode": otp,
+         }));
+     if(res.statusCode ==200){
+       print(jsonDecode(res.body)["token"]);
+       return jsonDecode(res.body);
+     }
+     else{
+       throw ServerExceptions();
+     }
+   }
+       catch(err){
+         throw ServerExceptions();
+       }
   }
 }

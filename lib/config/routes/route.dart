@@ -4,6 +4,7 @@ import 'package:broker_app/feauters/auth/presentation/blocs/login/login_bloc.dar
 import 'package:broker_app/feauters/auth/presentation/blocs/password_visiblity/password_bloc.dart';
 import 'package:broker_app/feauters/auth/presentation/blocs/register/register_bloc.dart';
 import 'package:broker_app/feauters/auth/presentation/pages/register_page.dart';
+import 'package:broker_app/feauters/auth/presentation/pages/verification_screen.dart';
 import 'package:broker_app/feauters/houses/domain/entities/house.dart';
 import 'package:broker_app/feauters/houses/presentation/blocs/create_house/create_house_bloc.dart';
 import 'package:broker_app/feauters/houses/presentation/blocs/get_house/get_house_bloc.dart';
@@ -74,6 +75,13 @@ class Routes{
         child: AddHousePage(),
         ),
       );
+
+      case "/verification":
+        return MaterialPageRoute(builder: (_)=>MultiBlocProvider(
+            providers: [
+              BlocProvider<RegisterBloc>(create: (context)=>sl<RegisterBloc>()),
+            ], child: VerificationScreen()));
+
       default:
       return MaterialPageRoute(
         builder: (_)=>MultiBlocProvider(providers: [
