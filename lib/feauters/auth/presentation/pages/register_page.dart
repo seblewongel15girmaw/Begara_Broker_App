@@ -2,6 +2,9 @@ import 'dart:io';
 
 import 'package:broker_app/core/util/validators.dart';
 import 'package:broker_app/feauters/auth/domain/entities/location.dart';
+import 'package:broker_app/feauters/auth/presentation/blocs/image/id_image.dart/id_image_bloc.dart';
+import 'package:broker_app/feauters/auth/presentation/blocs/image/id_image.dart/id_image_event.dart';
+import 'package:broker_app/feauters/auth/presentation/blocs/image/id_image.dart/id_image_state.dart';
 import 'package:broker_app/feauters/auth/presentation/blocs/login/login_bloc.dart';
 import 'package:broker_app/feauters/auth/presentation/blocs/login/login_state.dart';
 import 'package:broker_app/feauters/auth/presentation/blocs/register/register_bloc.dart';
@@ -15,7 +18,7 @@ import 'package:broker_app/feauters/auth/presentation/widgets/location_bar.dart'
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
-import '../blocs/image/image.dart';
+import '../blocs/image/profile_image.dart/image.dart';
 import '../widgets/upload_button.dart';
 
 class RegisterPage extends StatelessWidget {
@@ -181,10 +184,10 @@ class RegisterPage extends StatelessWidget {
                     UploadImageButton(
                         idImage: image2,
                         onPressed: () {
-                          BlocProvider.of<ImageBloc>(context).add(IdClicked());
+                          BlocProvider.of<IdImageBloc>(context).add(IdClicked());
                         },
                         listener: (context, state) {
-                          if (state is IdSelected) {
+                          if (state is IdSuccess) {
                             image2 = state.image;
                           }
                         },
