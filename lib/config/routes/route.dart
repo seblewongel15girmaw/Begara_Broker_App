@@ -1,4 +1,5 @@
-import 'package:broker_app/feauters/auth/presentation/blocs/image/image.dart';
+import 'package:broker_app/feauters/auth/presentation/blocs/image/id_image.dart/id_image_bloc.dart';
+import 'package:broker_app/feauters/auth/presentation/blocs/image/profile_image.dart/image.dart';
 import 'package:broker_app/feauters/auth/presentation/blocs/location/locations.dart';
 import 'package:broker_app/feauters/auth/presentation/blocs/login/login_bloc.dart';
 import 'package:broker_app/feauters/auth/presentation/blocs/password_visiblity/password_bloc.dart';
@@ -39,6 +40,7 @@ class Routes{
         BlocProvider<ImageBloc>(create: (context)=>ImageBloc()),
         BlocProvider<RegisterBloc>(create: (context)=>sl<RegisterBloc>()),
         BlocProvider<PasswordBloc>(create: (context)=>PasswordBloc()),
+        BlocProvider<IdImageBloc>(create: (context)=>IdImageBloc()),
         
        ],
         child: RegisterPage(),
@@ -50,6 +52,7 @@ class Routes{
             providers: [
               BlocProvider<LocationBloc>(create: (context)=>sl<LocationBloc>()),
               BlocProvider<ImageBloc>(create: (context)=>ImageBloc()),
+              
               BlocProvider<GetHouseBloc>(create: (contex)=>sl<GetHouseBloc>())
             ],
             child: HomePage()));

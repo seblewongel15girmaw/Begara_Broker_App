@@ -11,7 +11,3 @@ class ImageSelected extends ImageState{
   ImageSelected(this.image);
 }
 
-class IdSelected extends ImageState{
-  XFile? image;
-  IdSelected(this.image);
-}

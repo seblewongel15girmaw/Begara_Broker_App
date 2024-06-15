@@ -5,7 +5,6 @@ abstract class SelectEvent {
 }
 
 class ProfileClicked extends SelectEvent{}
-class IdClicked extends SelectEvent{}
 class CleanImage extends SelectEvent{}
 
 class ImageSelect extends SelectEvent{
