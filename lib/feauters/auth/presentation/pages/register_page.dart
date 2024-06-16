@@ -164,7 +164,6 @@ class RegisterPage extends StatelessWidget {
                         onChanged: (phone){
                           phoneNumber.text= phone.completeNumber;
                         },
-                        controller: phoneNumber,
                         initialCountryCode:"ET",
                         decoration: InputDecoration(
                         hintText: "Phone Number 1",
@@ -186,7 +185,6 @@ class RegisterPage extends StatelessWidget {
                         onChanged: (phone){
                           phoneNumber2.text= phone.completeNumber;
                         },
-                        controller: phoneNumber,
                         initialCountryCode:"ET",
                         decoration: InputDecoration(
                         hintText: "Phone Number 2",
