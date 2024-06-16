@@ -25,6 +25,8 @@ abstract class BrokerDataSource {
   Future<String> loginBroker(String email, String password);
   Future<List<LocationModel>> getLocations(String query);
   Future<String> verifyBroker(String otp);
+  Future<int> recoverPassword(String email);
+  Future<int> changePassword(String oldPassword, String newPassword);
 }
 
 class BrokerDataSourceImpl implements BrokerDataSource {
@@ -114,9 +116,12 @@ class BrokerDataSourceImpl implements BrokerDataSource {
            "sessionId": sessionId,
            "verificationCode": otp,
          }));
+
      if(res.statusCode ==200){
-       print(jsonDecode(res.body)["token"]);
-       return jsonDecode(res.body);
+      //  print(jsonDecode(res.body)["token"]);
+       print("this is success you guys");
+       await SharedPreferencesService.setString("tokens",jsonDecode(res.body)["token"]);
+       return jsonDecode(res.body)["token"];
      }
      else{
        throw ServerExceptions();
@@ -125,5 +130,40 @@ class BrokerDataSourceImpl implements BrokerDataSource {
        catch(err){
          throw ServerExceptions();
        }
+  }
+  @override
+  Future<int> recoverPassword(String email) async {
+    final response = await client.post(Uri.parse(baseUri + "forget_password"),
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode({"email": email}));
+    if (response.statusCode == 201) {
+      print("we are here and the response is ${response.body}");
+      return response.statusCode;
+    } else {
+      print("we are here and the response is ${response.body}");
+      throw ServerExceptions();
+    }
+  }
+  @override
+  Future<int> changePassword(String oldPassword, String newPassword) async{
+    final token = await SharedPreferencesService.getString("tokens");
+    final brokerId = decodeJwt(token!)["brokerId"];
+    final response= await client.post(Uri.parse(baseUri+"/change_password/$brokerId"),
+    headers: {
+      'Content-Type': 'application/json; charset=UTF-8',
+      'Authorization': 'Bearer $token'
+    },
+    body: jsonEncode({"oldPassword":oldPassword,
+            "newPassword":newPassword}),
+    );
+    if(response.statusCode==200){
+      return response.statusCode;
+    }
+    else{
+      
+      throw ServerExceptions();
+    }
   }
 }

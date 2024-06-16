@@ -18,4 +18,6 @@ abstract class BrokerRepo {
   Future<Either<Errors,String>> loginBroker(String email, String password);
   Future<Either<Errors,List<Location>>> getLocations(String query);
   Future<Either<Errors, String>> verifyBroker(String otp);
+  Future<Either<Errors,int>> recoverPassword(String email);
+  Future<Either<Errors,int>> changePassword(String oldPassword, String newPassword);
 }

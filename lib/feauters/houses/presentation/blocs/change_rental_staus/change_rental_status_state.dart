@@ -1,0 +1,5 @@
+abstract class ChangeRentalStatusState{}
+class IdleChangeRentalStatus extends ChangeRentalStatusState{}
+class ChangingRentalStatus extends ChangeRentalStatusState{}
+class ChangeRentalStatusFailed extends ChangeRentalStatusState{}
+class ChangeRentalStatusSuccess extends ChangeRentalStatusState{}

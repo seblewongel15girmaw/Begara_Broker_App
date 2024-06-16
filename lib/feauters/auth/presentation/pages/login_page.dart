@@ -9,6 +9,7 @@ import 'package:broker_app/feauters/auth/presentation/widgets/custom_password_fi
 import 'package:broker_app/feauters/auth/presentation/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl_phone_field/intl_phone_field.dart';
 
 class LoginPage extends StatelessWidget {
   final TextEditingController email= TextEditingController();
@@ -59,6 +60,16 @@ class LoginPage extends StatelessWidget {
             children: [
               CustomTextField(textController: email, label:"Email", validator: emailValidator),
               CustomPasswordField(textController: password, label:"Password", validator: passwordValidator),
+    
+              Align(
+                alignment: Alignment.bottomRight,
+                child: GestureDetector(
+                  onTap: (){
+                  Navigator.pushNamed(context, "/forget-password");
+                  },
+                  child: Text("Forgot password ?"),
+                ),
+              ),
               SizedBox(
                 height: 30,
               ),

@@ -3,6 +3,7 @@ import 'package:broker_app/feauters/auth/presentation/widgets/custom_text_field.
 import 'package:broker_app/feauters/auth/presentation/widgets/location_bar.dart';
 import 'package:broker_app/feauters/houses/presentation/blocs/create_house/create_house_bloc.dart';
 import 'package:broker_app/feauters/houses/presentation/blocs/create_house/create_house_event.dart';
+import 'package:broker_app/feauters/houses/presentation/blocs/create_house/create_house_state.dart';
 import 'package:broker_app/feauters/houses/presentation/widgets/custom_text_area.dart';
 import 'package:broker_app/feauters/houses/presentation/widgets/picture_frame.dart';
 import 'package:flutter/material.dart';
@@ -81,12 +82,22 @@ class AddHousePage extends StatelessWidget {
                             images: images));
                   }
                 },
-                child: Container(
-                  height: 50,
-                  color: Color.fromARGB(255, 187, 148, 48),
-                  child: Center(
-                    child: Text("Add House"),
-                  ),
+                child: BlocConsumer<CreateHouseBloc,CreateHouseState>(
+                  listener: (context,state){
+                    if(state is CreateHouseSuccess){
+                      Navigator.pushNamed(context, "/homePage");
+                    }
+                  },
+                  builder: (context,state) {
+                    
+                    return Container(
+                      height: 50,
+                      color: Color.fromARGB(255, 187, 148, 48),
+                      child: Center(
+                        child: state is CreatingHouse?CircularProgressIndicator():state is CreateHouseSuccess? Text("Success"): Text("Add House"),
+                      ),
+                    );
+                  }
                 ),
               ),
             )

@@ -88,8 +88,8 @@ class HomePage extends StatelessWidget{
                   itemBuilder: (context, index){
                     return GestureDetector
                       (onTap: (){
-                        Navigator.of(context).pushNamed("/houseDetail", arguments: houses[index]);
-                    },
+                         Navigator.of(context).pushNamed("/houseDetail", arguments: houses[index]);},
+                    
                         child: HouseCard(house:houses[index])
                     );
                   }

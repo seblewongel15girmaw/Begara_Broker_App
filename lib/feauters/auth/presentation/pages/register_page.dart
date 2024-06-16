@@ -18,6 +18,7 @@ import 'package:broker_app/feauters/auth/presentation/widgets/location_bar.dart'
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl_phone_field/intl_phone_field.dart';
 import '../blocs/image/profile_image.dart/image.dart';
 import '../widgets/upload_button.dart';
 
@@ -157,14 +158,58 @@ class RegisterPage extends StatelessWidget {
                         gender = newValue!;
                       },
                     ),
-                    CustomTextField(
-                        textController: phoneNumber,
-                        label: "Phone Number 1",
-                        validator: phoneNumberValidator),
-                    CustomTextField(
-                        textController: phoneNumber2,
-                        label: "Phone Number 2",
-                        validator: phoneNumberValidator),
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: IntlPhoneField(
+                        onChanged: (phone){
+                          phoneNumber.text= phone.completeNumber;
+                        },
+                        controller: phoneNumber,
+                        initialCountryCode:"ET",
+                        decoration: InputDecoration(
+                        hintText: "Phone Number 1",
+                        hintStyle: TextStyle(color: Color.fromARGB(255, 187, 148, 48)), // Set hint text color to amber
+                        contentPadding: EdgeInsets.symmetric(horizontal: 16.0), // Add padding for the entered text
+                        border: OutlineInputBorder(),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.grey), // Set border color for enabled state
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Color.fromARGB(255, 187, 148, 48)), // Set border color for focused state
+                        ),
+                      ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: IntlPhoneField(
+                        onChanged: (phone){
+                          phoneNumber2.text= phone.completeNumber;
+                        },
+                        controller: phoneNumber,
+                        initialCountryCode:"ET",
+                        decoration: InputDecoration(
+                        hintText: "Phone Number 2",
+                        hintStyle: TextStyle(color: Color.fromARGB(255, 187, 148, 48)), // Set hint text color to amber
+                        contentPadding: EdgeInsets.symmetric(horizontal: 16.0), // Add padding for the entered text
+                        border: OutlineInputBorder(),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.grey), // Set border color for enabled state
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Color.fromARGB(255, 187, 148, 48)), // Set border color for focused state
+                        ),
+                      ),
+                      ),
+                    ),
+                    // CustomTextField(
+                    //     textController: phoneNumber,
+                    //     label: "Phone Number 1",
+                    //     validator: phoneNumberValidator),
+                    // CustomTextField(
+                    //     textController: phoneNumber2,
+                    //     label: "Phone Number 2",
+                    //     validator: phoneNumberValidator),
                     LocationBar(
                         getLocation: (location) {
                           address = location;

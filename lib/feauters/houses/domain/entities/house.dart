@@ -8,6 +8,7 @@ class House extends Equatable{
   final int numberOfRooms;
   final String description;
   final List<ImageEntity> Images;
+  final int rentalStatus;
 
   const House({
     required this.houseId,
@@ -15,7 +16,8 @@ class House extends Equatable{
     required this.price,
     required this.numberOfRooms,
     required this.description,
-    required this.Images
+    required this.Images,
+    required this.rentalStatus,
   });
   
   @override
@@ -29,7 +31,8 @@ class House extends Equatable{
       "price": price,
       "numberOfRoom": numberOfRooms,
       "description": description,
-      "Images":Images
+      "Images":Images,
+      "rental_status":rentalStatus
     };
   }
 }

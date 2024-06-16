@@ -14,6 +14,8 @@ abstract class HouseDataSource{
   Future<int> postHouse(Location location, double price, int numberOfRoom, String description, List<XFile> images);
   Future<List<HouseModel>> getAllHouses(int brokerId);
   Future<House> getHouse(int houseId);
+  Future<int> deleteHouse(int houseId);
+  Future<int> changeHouseStatus(int houseId);
 }
 
 class HouseDataSourceImpl implements HouseDataSource{
@@ -24,8 +26,9 @@ class HouseDataSourceImpl implements HouseDataSource{
   @override
   Future<List<HouseModel>> getAllHouses(int brokerId) async{
      List<HouseModel> houseList;
-     final token = await SharedPreferencesService.getString("tokens");   
-  http.Response response = await http.get(Uri.parse(baseUri+"all_broker_house/${1}"),
+     final token = await SharedPreferencesService.getString("tokens");  
+     final brokerId= decodeJwt(token!)["brokerId"]; 
+  http.Response response = await http.get(Uri.parse(baseUri+"all_broker_house/${brokerId}"),
   headers: {
         'Content-Type': 'application/json; charset=UTF-8',
         'Authorization': 'Bearer $token'
@@ -50,7 +53,9 @@ class HouseDataSourceImpl implements HouseDataSource{
   @override
   Future<House> getHouse(int houseId) async{
     try{
-      http.Response res= await http.get(Uri.parse(baseUri+"gethousedetail/:${1}"));
+      final token = await SharedPreferencesService.getString("tokens");  
+      final brokerId= decodeJwt(token!)["brokerId"];
+      http.Response res= await http.get(Uri.parse(baseUri+"gethousedetail/:${brokerId}"));
       var house= jsonDecode(res.body);
 
       HouseModel houseDetail=HouseModel.fromJson(house);
@@ -65,9 +70,11 @@ class HouseDataSourceImpl implements HouseDataSource{
 
   @override
   Future<int> postHouse(Location location, double price, int numberOfRoom, String description, List<XFile> images) async{
-  final token = await SharedPreferencesService.getString("tokens");
+  final token = await SharedPreferencesService.getString("tokens"); 
+  final brokerId= decodeJwt(token!)["brokerId"];
+  
   // final id= decodeJwt(token!)["userId"];
-  final apiUrl= Uri.parse(baseUri+"/posthouse/${1}");
+  final apiUrl= Uri.parse(baseUri+"/posthouse/${brokerId}");
    final request= await uploadMultipleImage(location, price, numberOfRoom, description, images, token, apiUrl);
    final response= await request.send();
    if(response.statusCode==201){
@@ -76,6 +83,38 @@ class HouseDataSourceImpl implements HouseDataSource{
    else{
     throw ServerExceptions();
    }
+  }
+  
+  @override
+  Future<int> changeHouseStatus(int houseId) async{
+   final token = await SharedPreferencesService.getString("tokens");
+   final response= await client.post(Uri.parse(baseUri+"house_status/${houseId}"),
+   headers:{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer $token'
+      }, );
+    if(response.statusCode==200){
+      return response.statusCode;
+    }
+    else{
+      throw ServerExceptions();
+    }
+  }
+  
+  @override
+  Future<int> deleteHouse(int houseId) async{
+    final token = await SharedPreferencesService.getString("tokens");
+   final response= await client.delete(Uri.parse(baseUri+"deletehouse/${houseId}"),
+   headers:{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer $token'
+      }, );
+    if(response.statusCode==200){
+      return response.statusCode;
+    }
+    else{
+      throw ServerExceptions();
+    }
   }
 
 }

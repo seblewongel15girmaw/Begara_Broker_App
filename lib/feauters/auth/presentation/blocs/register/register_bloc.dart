@@ -33,8 +33,10 @@ class RegisterBloc extends Bloc<BrokerEvent, RegisterState> {
         gender: event.gender);
     final response= await registerBroker(param);
     response.fold((ifLeft){
+      
       emit(RegisterFailed());
     }, (ifRight){
+      
       emit(RegisterSuccess());
     });
   }
@@ -42,13 +44,16 @@ class RegisterBloc extends Bloc<BrokerEvent, RegisterState> {
 
 FutureOr<void> sentOTP(SentOTPEvent event, Emitter emit) async{
   emit(RegisterSuccess());
+  print(event.otp);
   final res= await verifyBroker(event.otp);
   print("this is in the sentotp event");
   print(res);
   res.fold((ifLeft){
+    print("the response is on the left");
     emit(VerificationFailed());
   },
   (ifRight){
+    print("no it's on the right");
     emit(VerificationSuccess());
   });
 }

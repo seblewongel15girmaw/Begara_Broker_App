@@ -57,4 +57,27 @@ class BrokerRepoImpl implements BrokerRepo{
     }
   }
 
+  @override
+  Future<Either<Errors, int>> recoverPassword(String email) async{
+    try{
+      network.isConnected;
+      return Right(await brokerDataSource.recoverPassword(email) );
+    }
+    on ServerExceptions{
+      return Left(ServerErrors());
+    }
+  }
+  @override
+  Future<Either<Errors, int>> changePassword(String oldPassword, String newPassword) async{
+    try{
+      network.isConnected;
+      return Right(await brokerDataSource.changePassword(oldPassword, newPassword));
+    }
+    on ServerExceptions{
+      return Left(ServerErrors());
+    }
+
+  }
+
+
 }

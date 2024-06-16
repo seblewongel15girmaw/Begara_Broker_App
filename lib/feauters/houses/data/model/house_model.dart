@@ -10,14 +10,16 @@ class HouseModel extends House {
     required double price,
     required int numberOfRooms,
     required String description,
-    required List<ImageEntity> Images
+    required List<ImageEntity> Images,
+    required int rentalStatus,
   }) : super(
             houseId: houseId,
             location: location,
             price: price,
             numberOfRooms: numberOfRooms,
             Images: Images,
-            description: description);
+            description: description,
+            rentalStatus: rentalStatus);
   factory HouseModel.fromJson(Map<String, dynamic> map) {
 
     List<dynamic> imagesJson = map['Images'] ?? [];
@@ -29,6 +31,7 @@ class HouseModel extends House {
         price: map["price"].toDouble(),
         numberOfRooms: map["numberOfRoom"],
         Images: images,
-        description: map["description"]);
+        description: map["description"],
+        rentalStatus: map["rental_status"]);
   }
 }

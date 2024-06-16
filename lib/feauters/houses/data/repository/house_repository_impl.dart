@@ -44,5 +44,27 @@ class HouseRepositoryImpl implements Houserepository{
       return Left(ServerErrors());
     }
   }
+  
+  @override
+  Future<Either<Errors, int>> changeHouseStatus(int houseId) async{
+    try{
+      network.isConnected;
+      return Right(await houseDataSource.changeHouseStatus(houseId));
+    }
+    on ServerExceptions{
+      return Left(ServerErrors());
+    }
+  }
+  
+  @override
+  Future<Either<Errors, int>> deleteHouse(int houseId) async{
+    try{
+      network.isConnected;
+      return Right(await houseDataSource.deleteHouse(houseId));
+    }
+    on ServerExceptions{
+      return Left(ServerErrors());
+    }
+  }
 
 }
