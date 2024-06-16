@@ -79,10 +79,13 @@ HouseCard({required this.house});
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                IconButton(onPressed: (){},
+                IconButton(onPressed: (){
+                  Navigator.pushNamed(context, "/edit-house",
+                                    arguments: house);
+                },
                     icon: Icon(Icons.edit, color: Colors.blueAccent,size: 18,)),
-                IconButton(onPressed: (){},
-                    icon:Icon(Icons.delete, color: Colors.red,size: 18,) )
+                // IconButton(onPressed: (){},
+                //     icon:Icon(Icons.delete, color: Colors.red,size: 18,) )
               ],
             ),
           ),

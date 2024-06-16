@@ -262,18 +262,20 @@ class RegisterPage extends StatelessWidget {
                       }, builder: (context, state) {
                         return Padding(
                           padding: EdgeInsets.all(10),
-                          child: Container(
-                            color: state is RegisterFailed
-                                ? Colors.red
-                                : State is Registering
-                                    ? Colors.grey
-                                    : Color.fromARGB(255, 187, 148, 48),
-                            height: 40,
-                            child: Center(
-                              child: state is RegisterFailed
-                                  ? Text("Retry")
-                                  : Text("Submit"),
-                            ),
+                          child: Column(
+                            children: [
+                              Container(
+                                color: State is Registering
+                                        ? Colors.grey
+                                        : Color.fromARGB(255, 187, 148, 48),
+                                height: 40,
+                                child: Center(
+                                  child:Text("Submit"),
+                                ),
+                              ),
+                              SizedBox(height:7),
+                              state is RegisterFailed?Center(child:Text("Invalid Credentials", style:TextStyle(color:Colors.red))):SizedBox(width:0)
+                            ],
                           ),
                         );
                       }),

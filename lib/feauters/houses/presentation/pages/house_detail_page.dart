@@ -304,7 +304,6 @@ class HouseDetail extends StatelessWidget {
                               children: [
                                 ElevatedButton(
                                     onPressed: () {
-                                      print(houseModel.houseId);
                                       BlocProvider.of<RemoveHouseBloc>(context)
                                           .add(RemoveHouseEvent(
                                               id: houseModel.houseId));

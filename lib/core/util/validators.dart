@@ -82,7 +82,7 @@ String? budgetValidator(String? value){
   
 bool isNumeric(value){
   try {
-    int.parse(value);
+    num.parse(value);
     return true;
   }
   catch(e){
