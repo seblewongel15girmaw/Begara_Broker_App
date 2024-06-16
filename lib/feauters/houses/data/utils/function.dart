@@ -14,8 +14,9 @@ Future<http.MultipartRequest> uploadMultipleImage(
   List<XFile> images,
   token,
   apiUrl,
+  String typeOfRequest
 ) async {
-  final imageUploadRequest = http.MultipartRequest('POST', apiUrl);
+  final imageUploadRequest = http.MultipartRequest(typeOfRequest, apiUrl);
   for (var profilePic in images) {
     final mimeType = lookupMimeType(profilePic.path)!.split('/');
     final file = await http.MultipartFile.fromPath(
@@ -30,6 +31,7 @@ Future<http.MultipartRequest> uploadMultipleImage(
     imageUploadRequest.fields['price'] = price.toString();
     imageUploadRequest.fields['numberOfRoom'] = numberOfRoom.toString();
     imageUploadRequest.fields['description'] = description;
+
     imageUploadRequest.headers['Authorization'] = 'Bearer $token';
   } catch (error) {
     print("some error occured $error");

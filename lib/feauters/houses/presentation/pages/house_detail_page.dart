@@ -43,7 +43,7 @@ class HouseDetail extends StatelessWidget {
                 borderRadius:
                     BorderRadius.vertical(bottom: Radius.circular(70)),
                 child: Stack(
-                  alignment: Alignment.center,
+                  alignment: Alignment.topRight,
                   children: [
                     Container(
                       height: height / 2,
@@ -64,12 +64,25 @@ class HouseDetail extends StatelessWidget {
                               return Image(
                                 image: FileImage(File(image.imageUrl)),
                                 fit: BoxFit.cover,
-                                opacity: houseModel.rentalStatus==1?AlwaysStoppedAnimation(0.5):null,
+                                opacity: houseModel.rentalStatus == 1
+                                    ? AlwaysStoppedAnimation(0.5)
+                                    : null,
                               );
                             },
                           ).toList()),
                     ),
-                    houseModel.rentalStatus==1? Icon(Icons.lock,size: 30,color: Colors.amber[400],):SizedBox(height: 0,),
+                    houseModel.rentalStatus == 1
+                        ? Container(
+                            width: 50,
+                            height: 30,
+                            color: Color.fromRGBO(212, 175, 55, 1),
+                            child: Center(
+                              child: Text("Rented",style: TextStyle(color: Colors.white),),
+                            ),
+                          )
+                        : SizedBox(
+                            height: 0,
+                          ),
                   ],
                 ),
               ),
@@ -81,7 +94,7 @@ class HouseDetail extends StatelessWidget {
                   decoration: BoxDecoration(
                       borderRadius:
                           BorderRadius.only(bottomRight: Radius.circular(20)),
-                      color: Colors.black),
+                      color: Color.fromRGBO(212, 175, 55, 1)),
                   child: IconButton(
                     icon: Icon(Icons.arrow_circle_left_outlined),
                     color: Colors.white,
@@ -97,193 +110,235 @@ class HouseDetail extends StatelessWidget {
                   width: width,
                   height: height / 2,
                   decoration: BoxDecoration(),
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        SizedBox(
-                          height: 35,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 40),
-                          child: Row(
-                            children: [
-                              SizedBox(
-                                width: 17,
-                              ),
-                              Expanded(
-                                  child: Text(location,
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.bold,
-                                      ))),
-                            ],
+                  child: SingleChildScrollView(
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            height: 35,
                           ),
-                        ),
-                        SizedBox(
-                          height: 8,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 40),
-                          child: Row(
-                            children: [
-                              SizedBox(
-                                width: 17,
-                              ),
-                              Expanded(
-                                  child: Text(
-                                houseModel.description,
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.bold,
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 40),
+                            child: Row(
+                              children: [
+                                SizedBox(
+                                  width: 2,
                                 ),
-                              )),
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          height: 8,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 40),
-                          child: Row(
-                            children: [
-                              SizedBox(
-                                width: 17,
-                              ),
-                              Text(
-                                '${houseModel.price.toString()} ETB',
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.bold,
+                                Icon(
+                                  Icons.location_on,
+                                  color: Color.fromRGBO(212, 175, 55, 1),
                                 ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          height: 8,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 40),
-                          child: Row(
-                            children: [
-                              SizedBox(
-                                width: 17,
-                              ),
-                              Text(
-                                '${houseModel.numberOfRooms.toString()} rooms ',
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.bold,
+                                SizedBox(
+                                  width: 17,
                                 ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          height: 30,
-                        ),
-                        ElevatedButton(
-                            onPressed: () {
-                              Navigator.pushNamed(context, "/edit-house",
-                                  arguments: houseModel);
-                            },
-                            style: ElevatedButton.styleFrom(
-                              fixedSize: Size(300, 30),
-
-                              backgroundColor: Colors
-                                  .blueGrey, // Change the background color here
+                                Expanded(
+                                    child: Text(location,
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.bold,
+                                        ))),
+                              ],
                             ),
-                            child: Text("Edit House",
-                                style: TextStyle(color: Colors.white))),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        BlocConsumer<ChangeRentalStausBloc,ChangeRentalStatusState>(
-                          listener: (context,state){
-                            if(state is ChangeRentalStatusSuccess){
+                          ),
+                          SizedBox(
+                            height: 8,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 40),
+                            child: Row(
+                              children: [
+                                SizedBox(
+                                  width: 2,
+                                ),
+                                Icon(
+                                  Icons.description,
+                                  color: Color.fromRGBO(212, 175, 55, 1),
+                                ),
+                                SizedBox(
+                                  width: 17,
+                                ),
+                                Expanded(
+                                    child: Text(
+                                  houseModel.description,
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                )),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            height: 8,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 40),
+                            child: Row(
+                              children: [
+                                SizedBox(
+                                  width: 2,
+                                ),
+                                Icon(
+                                  Icons.price_change,
+                                  color: Color.fromRGBO(212, 175, 55, 1),
+                                ),
+                                SizedBox(
+                                  width: 17,
+                                ),
+                                Text(
+                                  '${houseModel.price.toString()} ETB',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            height: 8,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 40),
+                            child: Row(
+                              children: [
+                                SizedBox(
+                                  width: 2,
+                                ),
+                                Icon(
+                                  Icons.house,
+                                  color: Color.fromRGBO(212, 175, 55, 1),
+                                ),
+                                SizedBox(
+                                  width: 17,
+                                ),
+                                Text(
+                                  '${houseModel.numberOfRooms.toString()} rooms ',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            height: 30,
+                          ),
+                          ElevatedButton(
+                              onPressed: () {
+                                Navigator.pushNamed(context, "/edit-house",
+                                    arguments: houseModel);
+                              },
+                              style: ElevatedButton.styleFrom(
+                                fixedSize: Size(300, 30),
+
+                                backgroundColor: Color.fromRGBO(212, 175, 55,
+                                    1), // Change the background color here
+                              ),
+                              child: Text("Edit House",
+                                  style: TextStyle(color: Colors.white))),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          BlocConsumer<ChangeRentalStausBloc,
+                                  ChangeRentalStatusState>(
+                              listener: (context, state) {
+                            if (state is ChangeRentalStatusSuccess) {
                               Navigator.of(context).pushNamed("/homePage");
                             }
-                          },
-                          builder: (context,state) {
+                          }, builder: (context, state) {
                             return Column(
                               children: [
                                 ElevatedButton(
                                     onPressed: () {
-                                      BlocProvider.of<ChangeRentalStausBloc>(context).add(ChangeRentalStatusEvent(id: houseModel.houseId));
+                                      BlocProvider.of<ChangeRentalStausBloc>(
+                                              context)
+                                          .add(ChangeRentalStatusEvent(
+                                              id: houseModel.houseId));
                                     },
                                     style: ElevatedButton.styleFrom(
                                       fixedSize: Size(300, 30),
-                                
-                                      backgroundColor: Colors
-                                          .blueGrey, // Change the background color here
+
+                                      backgroundColor: Color.fromRGBO(
+                                          212,
+                                          175,
+                                          55,
+                                          1), // Change the background color here
                                     ),
-                                    child: state is ChangingRentalStatus? CircularProgressIndicator(): houseModel.rentalStatus==0?Text("House is not avaliable",
-                                        style: TextStyle(color: Colors.white)):Text("House is avaliable",
-                                        style: TextStyle(color: Colors.white))),
-                              SizedBox(
-                                height: 2,
-                              ),
-                              state is ChangeRentalStatusFailed
-                                  ? Center(
-                                      child: Text(
-                                        "Unable to change house rental status",
-                                        style: TextStyle(color: Colors.red),
-                                      ),
-                                    )
-                                  : SizedBox(
-                                      height: 0,
-                                    )
+                                    child: state is ChangingRentalStatus
+                                        ? CircularProgressIndicator()
+                                        : houseModel.rentalStatus == 0
+                                            ? Text("Mark House as Rented",
+                                                style: TextStyle(
+                                                    color: Colors.white))
+                                            : Text("Make House Available",
+                                                style: TextStyle(
+                                                    color: Colors.white))),
+                                SizedBox(
+                                  height: 2,
+                                ),
+                                state is ChangeRentalStatusFailed
+                                    ? Center(
+                                        child: Text(
+                                          "Unable to change house rental status",
+                                          style: TextStyle(color: Colors.red),
+                                        ),
+                                      )
+                                    : SizedBox(
+                                        height: 0,
+                                      )
                               ],
                             );
-                          }
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        BlocConsumer<RemoveHouseBloc, RemoveHouseState>(
-                            listener: (context, state) {
-                          if (state is RemovingHouseSuccess) {
-                            Navigator.pushNamed(context, "/homePage");
-                          }
-                        }, builder: (context, state) {
-                          return Column(
-                            children: [
-                              ElevatedButton(
-                                  onPressed: () {
-                                    print(houseModel.houseId);
-                                    BlocProvider.of<RemoveHouseBloc>(context)
-                                        .add(RemoveHouseEvent(
-                                            id: houseModel.houseId));
-                                  },
-                                  style: ElevatedButton.styleFrom(
-                                    fixedSize: Size(300, 30),
-                                    backgroundColor: Colors
-                                        .redAccent, // Change the background color here
-                                  ),
-                                  child: state is RemovingHouse
-                                      ? CircularProgressIndicator()
-                                      : Text(
-                                          "Delete House",
-                                          style: TextStyle(color: Colors.white),
-                                        )),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              state is RemovingHouseFailed
-                                  ? Center(
-                                      child: Text(
-                                        "House deletion failed",
-                                        style: TextStyle(color: Colors.red),
-                                      ),
-                                    )
-                                  : SizedBox(
-                                      height: 0,
-                                    )
-                            ],
-                          );
-                        }),
-                      ])),
+                          }),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          BlocConsumer<RemoveHouseBloc, RemoveHouseState>(
+                              listener: (context, state) {
+                            if (state is RemovingHouseSuccess) {
+                              Navigator.pushNamed(context, "/homePage");
+                            }
+                          }, builder: (context, state) {
+                            return Column(
+                              children: [
+                                ElevatedButton(
+                                    onPressed: () {
+                                      print(houseModel.houseId);
+                                      BlocProvider.of<RemoveHouseBloc>(context)
+                                          .add(RemoveHouseEvent(
+                                              id: houseModel.houseId));
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      fixedSize: Size(300, 30),
+                                      backgroundColor: Colors
+                                          .redAccent, // Change the background color here
+                                    ),
+                                    child: state is RemovingHouse
+                                        ? CircularProgressIndicator()
+                                        : Text(
+                                            "Delete House",
+                                            style:
+                                                TextStyle(color: Colors.white),
+                                          )),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                state is RemovingHouseFailed
+                                    ? Center(
+                                        child: Text(
+                                          "House deletion failed",
+                                          style: TextStyle(color: Colors.red),
+                                        ),
+                                      )
+                                    : SizedBox(
+                                        height: 0,
+                                      )
+                              ],
+                            );
+                          }),
+                        ]),
+                  )),
             )
           ],
         ),

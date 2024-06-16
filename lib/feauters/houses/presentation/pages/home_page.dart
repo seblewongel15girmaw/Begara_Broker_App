@@ -6,6 +6,8 @@ import 'package:broker_app/feauters/houses/presentation/widgets/house_card.dart'
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../auth/presentation/blocs/logout/logout.dart';
+
 class HomePage extends StatelessWidget{
 
   @override
@@ -53,15 +55,22 @@ class HomePage extends StatelessWidget{
                   title: Text("Change Credentials", style: TextStyle(fontSize: 13)),
                 ),
 
-                ListTile(
-                  onTap: (){
-                    Navigator.pop(context);
-                    Navigator.pushNamed(context, "/give-feedback");
-                    // scaffoldKey.currentState!.openEndDrawer();
+                BlocListener<LogoutBloc,LogOutState>(
+                  listener: (context,state) {
+                    if(state is LoggedOut)
+                    {
+                      Navigator.pushNamed(context, "/login");
+                    }
                   },
-
-                  leading: Icon(Icons.feedback_sharp),
-                  title: Text("Feedback and rate", style: TextStyle(fontSize: 13)),
+                  child:  ListTile(
+                    onTap: () {
+                      BlocProvider.of<LogoutBloc>(context).add(LogoutEvent());
+                    },
+                    iconColor: Colors.white,
+                    textColor: Colors.white,
+                    leading: Icon(Icons.logout),
+                    title: Text("Sign Out", style: TextStyle(fontSize: 13)),
+                                  ),
                 ),
 
               ])),

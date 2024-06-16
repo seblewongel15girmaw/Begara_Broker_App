@@ -78,6 +78,17 @@ class BrokerRepoImpl implements BrokerRepo{
     }
 
   }
+  
+  @override
+  Future<Either<Errors, int>> logoutUser() async{
+    try{
+      network.isConnected;
+      return Right(await brokerDataSource.logoutUser());
+    }
+    on ServerExceptions{
+      return Left(ServerErrors());
+    }
+  }
 
 
 }

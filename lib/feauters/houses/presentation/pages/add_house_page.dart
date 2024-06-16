@@ -23,87 +23,91 @@ class AddHousePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final newContext = context;
     bool onChange = false;
-    final size = MediaQuery.of(context).size;
+    // final size = MediaQuery.of(context).size;
     final ValueNotifier<int> _notifier = ValueNotifier<int>(0);
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Color.fromRGBO(212, 175, 55,1),
-        title: Text("Add house"),
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            SizedBox(
-              height: 15,
-            ),
-            PictureFrame(
-                newContext: newContext,
-                onChange: onChange,
-                finalImage: finalImage,
-                images: images,
-                notifier: _notifier,
-                size: size),
-            SizedBox(
-              height: 20,
-            ),
-            Form(
-              key: formkey,
-              child: Column(
-                children: [
-                  LocationBar(
-                      getLocation: (location) {
-                        address = location;
-                      },
-                      width: size.width,
-                      choosenLocation: null),
-                  CustomTextField(
-                      textController: numberRooms,
-                      label: "Number Of Rooms",
-                      validator: ageValidator),
-                  CustomTextField(
-                      textController: price,
-                      label: "Price",
-                      validator: budgetValidator),
-                  CustomTextArea(description: description),
-                ],
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.all(10),
-              child: GestureDetector(
-                onTap: () {
-                  if (formkey.currentState!.validate()) {
-                    BlocProvider.of<CreateHouseBloc>(context).add(
-                        CreateHouseEvent(
-                            location: address!,
-                            price: double.parse(price.text),
-                            numberOfRoom: int.parse(numberRooms.text),
-                            description: description.text,
-                            images: images));
-                  }
-                },
-                child: BlocConsumer<CreateHouseBloc,CreateHouseState>(
-                  listener: (context,state){
-                    if(state is CreateHouseSuccess){
-                      Navigator.pushNamed(context, "/homePage");
-                    }
-                  },
-                  builder: (context,state) {
-                    
-                    return Container(
-                      height: 50,
-                      color: Color.fromARGB(255, 187, 148, 48),
-                      child: Center(
-                        child: state is CreatingHouse?CircularProgressIndicator():state is CreateHouseSuccess? Text("Success"): Text("Add House"),
-                      ),
-                    );
-                  }
+    return LayoutBuilder(
+      builder: (context,constraints) {
+        return Scaffold(
+          appBar: AppBar(
+            backgroundColor: Color.fromRGBO(212, 175, 55,1),
+            title: Text("Add house"),
+          ),
+          body: SingleChildScrollView(
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 15,
                 ),
-              ),
-            )
-          ],
-        ),
-      ),
+                PictureFrame(
+                    newContext: newContext,
+                    onChange: onChange,
+                    finalImage: finalImage,
+                    images: images,
+                    notifier: _notifier,
+                    size: constraints),
+                SizedBox(
+                  height: 20,
+                ),
+                Form(
+                  key: formkey,
+                  child: Column(
+                    children: [
+                      LocationBar(
+                          getLocation: (location) {
+                            address = location;
+                          },
+                          width: constraints.maxWidth,
+                          choosenLocation: null),
+                      CustomTextField(
+                          textController: numberRooms,
+                          label: "Number Of Rooms",
+                          validator: ageValidator),
+                      CustomTextField(
+                          textController: price,
+                          label: "Price",
+                          validator: budgetValidator),
+                      CustomTextArea(description: description),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.all(10),
+                  child: GestureDetector(
+                    onTap: () {
+                      if (formkey.currentState!.validate()) {
+                        BlocProvider.of<CreateHouseBloc>(context).add(
+                            CreateHouseEvent(
+                                location: address!,
+                                price: double.parse(price.text),
+                                numberOfRoom: int.parse(numberRooms.text),
+                                description: description.text,
+                                images: images));
+                      }
+                    },
+                    child: BlocConsumer<CreateHouseBloc,CreateHouseState>(
+                      listener: (context,state){
+                        if(state is CreateHouseSuccess){
+                          Navigator.pushNamed(context, "/homePage");
+                        }
+                      },
+                      builder: (context,state) {
+                        
+                        return Container(
+                          height: 50,
+                          color: Color.fromARGB(255, 187, 148, 48),
+                          child: Center(
+                            child: state is CreatingHouse?CircularProgressIndicator():state is CreateHouseSuccess? Text("Success"): Text("Add House"),
+                          ),
+                        );
+                      }
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
+        );
+      }
     );
   }
 }

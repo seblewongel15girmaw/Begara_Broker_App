@@ -33,31 +33,47 @@ HouseCard({required this.house});
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
-            child: Container(
-              height: 140,
-              padding: const EdgeInsets.all(6.0),
-              child: AnotherCarousel(
-                      boxFit: BoxFit.cover,
-                      autoplay: false,
-                      animationCurve: Curves.fastOutSlowIn,
-                      animationDuration: Duration(milliseconds: 800),
-                      dotSize: 4.0,
-                      dotIncreasedColor: Color(0xFF7E7E7E),
-                      dotBgColor: Colors.transparent,
-                      dotPosition: DotPosition.bottomCenter,
-                      dotVerticalPadding: 10.0,
-                      showIndicator: true,
-                      indicatorBgPadding: 7.0,
-                   images: house.Images.map((house) {
-                        return FittedBox(
-                        fit: BoxFit.fill,
-                        child: Image(
-                        image:FileImage(File(house.imageUrl)),
-                        )
-                        );
-                        }).toList()
-            ),
-          )),
+            child: Stack(
+              alignment: Alignment.topLeft,
+              children: [
+                Container(
+                  height: 140,
+                  padding: const EdgeInsets.all(6.0),
+                  child: AnotherCarousel(
+                          boxFit: BoxFit.cover,
+                          autoplay: false,
+                          animationCurve: Curves.fastOutSlowIn,
+                          animationDuration: Duration(milliseconds: 800),
+                          dotSize: 4.0,
+                          dotIncreasedColor: Color(0xFF7E7E7E),
+                          dotBgColor: Colors.transparent,
+                          dotPosition: DotPosition.bottomCenter,
+                          dotVerticalPadding: 10.0,
+                          showIndicator: true,
+                          indicatorBgPadding: 7.0,
+                       images: house.Images.map((houseImage) {
+                            return FittedBox(
+                            fit: BoxFit.fill,
+                            child: Image(
+                            // opacity: house.rentalStatus==1
+                            //         ? AlwaysStoppedAnimation(0.5)
+                            //         : null,
+                            image:FileImage(File(houseImage.imageUrl)),
+                            )
+                            );
+                            }).toList()
+                ),
+                          ),
+              house.rentalStatus==1? Container(
+                width: 60,
+                height: 30,
+                color: Color.fromRGBO(212, 175, 55,1),
+                child: Center(
+                  child: Text("Rented", style: TextStyle(color: Colors.white),),
+                ),
+              ):SizedBox(height: 0,)
+              ],
+            )),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 40),
             child: Row(

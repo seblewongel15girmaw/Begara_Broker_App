@@ -27,6 +27,7 @@ abstract class BrokerDataSource {
   Future<String> verifyBroker(String otp);
   Future<int> recoverPassword(String email);
   Future<int> changePassword(String oldPassword, String newPassword);
+  Future<int> logoutUser();
 }
 
 class BrokerDataSourceImpl implements BrokerDataSource {
@@ -163,6 +164,16 @@ class BrokerDataSourceImpl implements BrokerDataSource {
     }
     else{
       
+      throw ServerExceptions();
+    }
+  }
+  @override
+  Future<int> logoutUser() async{
+    dynamic result = await SharedPreferencesService.remove("tokens");
+    if(result==true){
+      return 1;
+    }
+    else{
       throw ServerExceptions();
     }
   }

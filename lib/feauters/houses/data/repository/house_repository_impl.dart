@@ -66,5 +66,17 @@ class HouseRepositoryImpl implements Houserepository{
       return Left(ServerErrors());
     }
   }
+  
+  @override
+  Future<Either<Errors, int>> editHouse(int houseId, Location location, double price, int numberOfRoom, String description, List<XFile> images) async{
+    // TODO: implement editHouse
+    try{
+      network.isConnected;
+      return Right(await houseDataSource.editHouse(houseId, location, price, numberOfRoom, description, images));
+    }
+    on ServerExceptions{
+      return Left(ServerErrors());
+    }
+  }
 
 }

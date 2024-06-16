@@ -16,6 +16,7 @@ abstract class HouseDataSource{
   Future<House> getHouse(int houseId);
   Future<int> deleteHouse(int houseId);
   Future<int> changeHouseStatus(int houseId);
+  Future<int> editHouse(int houseId,Location location, double price, int numberOfRoom, String description,List<XFile>images);
 }
 
 class HouseDataSourceImpl implements HouseDataSource{
@@ -75,7 +76,7 @@ class HouseDataSourceImpl implements HouseDataSource{
   
   // final id= decodeJwt(token!)["userId"];
   final apiUrl= Uri.parse(baseUri+"/posthouse/${brokerId}");
-   final request= await uploadMultipleImage(location, price, numberOfRoom, description, images, token, apiUrl);
+   final request= await uploadMultipleImage(location, price, numberOfRoom, description, images, token, apiUrl,"POST");
    final response= await request.send();
    if(response.statusCode==201){
     return response.statusCode;
@@ -115,6 +116,21 @@ class HouseDataSourceImpl implements HouseDataSource{
     else{
       throw ServerExceptions();
     }
+  }
+  
+  @override
+  Future<int> editHouse(int houseId, Location location, double price, int numberOfRoom, String description, List<XFile> images) async{
+    final token = await SharedPreferencesService.getString("tokens"); 
+    final apiUrl= Uri.parse(baseUri+"/edithouse/${houseId}");
+   final request= await uploadMultipleImage(location, price, numberOfRoom, description, images, token, apiUrl,"PUT");
+   final response= await request.send();
+   if(response.statusCode==201){
+    return response.statusCode;
+   }
+   else{
+    throw ServerExceptions();
+   }
+
   }
 
 }

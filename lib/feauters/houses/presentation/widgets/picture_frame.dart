@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:broker_app/feauters/houses/presentation/widgets/alert_box.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -13,7 +14,7 @@ class PictureFrame extends StatelessWidget {
   XFile? finalImage;
   final List<XFile> images;
   final ValueNotifier<int> notifier;
-  final size;
+  BoxConstraints size;
   PictureFrame(
       {required this.newContext,
       required this.onChange,
@@ -37,13 +38,16 @@ class PictureFrame extends StatelessWidget {
                 }
               }, builder: (context, state) {
                 return Container(
-                  height: size.height * 0.30,
+                  height: size.maxHeight * 0.30,
                   decoration: BoxDecoration(
                       image: state is ImageSelected
                           ? DecorationImage(
                               image: FileImage(File(state.image!.path)),
                               fit: BoxFit.fill)
-                          : DecorationImage(image: AssetImage("asset/image_place_holder.png"),fit: BoxFit.fill),
+                          :finalImage==null?DecorationImage(image: AssetImage("asset/image_place_holder.png"),fit: BoxFit.fill):
+                          DecorationImage(
+                              image: FileImage(File(finalImage!.path)),
+                              fit: BoxFit.fill),
                       border: Border.all(
                         width: 2,
                         color: Color.fromARGB(255, 187, 148, 48),
@@ -108,7 +112,7 @@ class PictureFrame extends StatelessWidget {
                             color: Color.fromARGB(255, 187, 148, 48),
                             width: 1), // Added border
                       ),
-                      width: size.width,
+                      width: size.maxWidth,
                       height: 60,
                       child: GridView.builder(
                           itemCount: 5,

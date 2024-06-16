@@ -7,8 +7,10 @@ import '../../../auth/domain/entities/location.dart';
 
 abstract class Houserepository{
   Future<Either<Errors,int>> postHouse(Location location, double price, int numberOfRoom, String description,List<XFile>images);
+  Future<Either<Errors,int>> editHouse(int houseId,Location location, double price, int numberOfRoom, String description,List<XFile>images);
   Future<Either<Errors,List<House>>> getAllHouses(int brokerId);
   Future<Either<Errors,House>> getHouse(int houseId);
   Future<Either<Errors,int>> deleteHouse(int houseId);
   Future<Either<Errors,int>> changeHouseStatus(int houseId);
+
 }

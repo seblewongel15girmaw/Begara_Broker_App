@@ -2,6 +2,7 @@ import 'package:broker_app/feauters/auth/presentation/blocs/image/id_image.dart/
 import 'package:broker_app/feauters/auth/presentation/blocs/image/profile_image.dart/image.dart';
 import 'package:broker_app/feauters/auth/presentation/blocs/location/locations.dart';
 import 'package:broker_app/feauters/auth/presentation/blocs/login/login_bloc.dart';
+import 'package:broker_app/feauters/auth/presentation/blocs/logout/logout.dart';
 import 'package:broker_app/feauters/auth/presentation/blocs/password_visiblity/password_bloc.dart';
 import 'package:broker_app/feauters/auth/presentation/blocs/register/register_bloc.dart';
 import 'package:broker_app/feauters/auth/presentation/pages/register_page.dart';
@@ -9,6 +10,7 @@ import 'package:broker_app/feauters/auth/presentation/pages/verification_screen.
 import 'package:broker_app/feauters/houses/domain/entities/house.dart';
 import 'package:broker_app/feauters/houses/presentation/blocs/change_rental_staus/change_rental_staus_bloc.dart';
 import 'package:broker_app/feauters/houses/presentation/blocs/create_house/create_house_bloc.dart';
+import 'package:broker_app/feauters/houses/presentation/blocs/edit_house/edit_house_bloc.dart';
 import 'package:broker_app/feauters/houses/presentation/blocs/get_house/get_house_bloc.dart';
 import 'package:broker_app/feauters/houses/presentation/blocs/remove_house/remove_house_bloc.dart';
 import 'package:broker_app/feauters/houses/presentation/pages/home_page.dart';
@@ -22,6 +24,7 @@ import '../../feauters/auth/presentation/pages/change_password_page.dart';
 import '../../feauters/auth/presentation/pages/forgot_passowrd_page.dart';
 import '../../feauters/auth/presentation/pages/login_page.dart';
 import '../../feauters/houses/presentation/pages/add_house_page.dart';
+import '../../feauters/houses/presentation/pages/edit_house_page.dart';
 import '../../injectionContainer.dart';
 
 class Routes{
@@ -58,7 +61,7 @@ class Routes{
             providers: [
               BlocProvider<LocationBloc>(create: (context)=>sl<LocationBloc>()),
               BlocProvider<ImageBloc>(create: (context)=>ImageBloc()),
-              
+              BlocProvider<LogoutBloc>(create: (context)=>sl<LogoutBloc>()),
               BlocProvider<GetHouseBloc>(create: (contex)=>sl<GetHouseBloc>())
             ],
             child: HomePage()));
@@ -85,6 +88,18 @@ class Routes{
         BlocProvider<CreateHouseBloc>(create: (context)=>sl<CreateHouseBloc>()), 
        ],
         child: AddHousePage(),
+        ),
+      );
+
+      case '/edit-house':
+      var args= settings.arguments as House;
+      return MaterialPageRoute(
+        builder: (_)=>MultiBlocProvider(providers: [
+        BlocProvider<ImageBloc>(create: (context)=>ImageBloc()),
+        BlocProvider<LocationBloc>(create: (context)=>sl<LocationBloc>()),
+        BlocProvider<EditHouseBloc>(create: (context)=>sl<EditHouseBloc>()), 
+       ],
+        child: EditHousePage(args),
         ),
       );
 
