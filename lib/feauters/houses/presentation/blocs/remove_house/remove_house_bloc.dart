@@ -16,8 +16,10 @@ class RemoveHouseBloc extends Bloc<RemoveHouseEvent,RemoveHouseState>{
     Params param= Params(id: event.id);
     final response= await deleteHouse(param);
     response.fold((ifLeft){
+      print("the error is here not gonna lie");
       emit(RemovingHouseFailed());
     }, (ifRight){
+      print("not gonna lie that was a massive success");
       emit(RemovingHouseSuccess());
     });
   }

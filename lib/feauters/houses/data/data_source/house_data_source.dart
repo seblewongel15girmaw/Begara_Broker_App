@@ -110,10 +110,11 @@ class HouseDataSourceImpl implements HouseDataSource{
         'Content-Type': 'application/json; charset=UTF-8',
         'Authorization': 'Bearer $token'
       }, );
-    if(response.statusCode==200){
+    if(response.statusCode==201){
       return response.statusCode;
     }
     else{
+      print(response.body);
       throw ServerExceptions();
     }
   }

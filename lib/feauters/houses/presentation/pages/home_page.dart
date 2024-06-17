@@ -21,29 +21,10 @@ class HomePage extends StatelessWidget{
 
       ),
       drawer: Drawer(
-        backgroundColor: Colors.white70,
+        backgroundColor: Color.fromRGBO(212, 175, 55,1),
           child: ListView(
               children:  [
-                SizedBox(height: 35),
-
-                SizedBox(height: 25,),
-                ListTile(
-
-                  leading: Icon(Icons.settings),
-                  title: Text("Setting", style: TextStyle(fontSize: 13),),
-                ),
-
-                ListTile(
-
-                  leading: Icon(Icons.color_lens),
-                  trailing: Icon(Icons.toggle_off_outlined),
-                  title: Text("Theme", style: TextStyle(fontSize: 13)),
-                ),
-                ListTile(
-
-                  leading: Icon(Icons.help),
-                  title: Text("Help", style: TextStyle(fontSize: 13)),
-                ),
+                SizedBox(height: 90),
                 ListTile(
                   onTap: (){
                     Navigator.pop(context);
